@@ -3,6 +3,15 @@ from fastapi import FastAPI
 import redis.asyncio as redis
 
 app = FastAPI()
+# --- ADD THIS CORS BLOCK ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all websites to hit your API (good for testing)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# ---------------------------
 
 # Paste your EXTERNAL URL in the quotes on the right.
 # This says: "Use the environment variable if it exists. If not, use my external URL."
