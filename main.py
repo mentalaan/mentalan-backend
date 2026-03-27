@@ -24,3 +24,8 @@ redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 async def countt():
     new_count = await redis_client.incr("mentalan-counter")
     return {"count": new_count}
+
+@app.get("/bonks")
+async def bonks():
+    count = await redis_client.get("mentalan-counter")
+    return {"count": new_count}
