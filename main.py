@@ -27,5 +27,5 @@ async def countt():
 
 @app.get("/bonks")
 async def bonks():
-    count = await redis_client.get("mentalan-counter")
+    new_count = await redis_client.get("mentalan-counter")
     return {"count": new_count}
