@@ -29,6 +29,12 @@ BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
 redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
+def get_client_ip(request: Request):
+    x_forwarded_for = request.headers.get("x-forwarded-for")
+    if x_forwarded_for:
+        return x_forwarded_for.split(",")[0].strip()
+    return request.client.host
+
 @app.get("/counter")
 async def countt():
     new_count = await redis_client.incr("mentalan-counter")
@@ -43,8 +49,8 @@ async def bonks():
 @app.get("/visits")
 async def count(req: Request):
     ip = get_client_ip(req)
-    await redis_client.sadd("mentalan-counter", ip)
-    count = await redis_client.scard("mentalan-counter")
+    await redis_client.sadd("mentalan-visits", ip)
+    count = await redis_client.scard("mentalan-visits")
     return {"count": count}
 
 @app.get("/alive")
