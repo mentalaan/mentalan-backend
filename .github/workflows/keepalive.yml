@@ -1,16 +1,15 @@
-name: Keep Render Backend Alive
+name: Keep Backend Alive
 
 on:
   schedule:
-    - cron: "*/1 * * * *"   # every 1 minute
-  workflow_dispatch:
+    # Runs every 14 minutes (Render free tier sleeps after 15 mins of inactivity)
+    - cron: '*/1 * * * *'
+  workflow_dispatch: # Allows you to run it manually for testing
 
 jobs:
   ping:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Ping Render backend
+      - name: Ping Render Backend
         run: |
-          curl -m 10 -s -o /dev/null -w "Status: %{http_code}\n" \
-          https://mentalan-backend.onrender.com/alive
+          curl -I https://mentalan-backend.onrender.com/alive
