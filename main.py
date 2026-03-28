@@ -63,7 +63,7 @@ def alive_job():
     requests.get(f"{BACKEND_URL}/alive",timeout = 2)
 
 
-@app.on_event("startup")
-async def startup():
-    scheduler.add_job(alive_job,trigger=IntervalTrigger(seconds=10))
-    scheduler.start()
+# @app.on_event("startup")
+# async def startup():
+#     scheduler.add_job(alive_job,trigger=IntervalTrigger(seconds=10))
+#     scheduler.start()
